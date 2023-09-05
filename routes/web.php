@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\HajiDataController;
+use App\Http\Controllers\HajiGroupsDataController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DefaulterDataController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +25,11 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::resource('add_hajji', HajiDataController::class);
+Route::resource('hajji_group', HajiGroupsDataController::class);
+Route::resource('defulter', DefaulterDataController::class);
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
