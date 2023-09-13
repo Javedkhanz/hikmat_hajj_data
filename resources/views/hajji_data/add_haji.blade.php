@@ -14,8 +14,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h2 class="text-2xl font-semibold mb-4 text-center">Hajji Data Form</h2>
-                    <form action="{{ route('add_hajji.index') }}" method="POST" class="grid grid-cols-2 gap-4"
-                        enctype="multipart/form-data">
+                    <form autocomplete="off" action="{{ route('HajiData.index') }}" method="POST"
+                        class="grid grid-cols-2 gap-4" enctype="multipart/form-data">
                         @csrf
                         <!-- Personal Image -->
                         <div class="mb-4">
@@ -48,8 +48,9 @@
                         </script>
                         <!-- Personal Information -->
                         <div class="mb-4 ">
-                            <label for="full_name" class="block font-semibold text-gray-700">Full Name</label>
-                            <input type="text" name="full_name" id="full_name" class="w-full p-2 border rounded-md">
+                            <label for="full_name" class="block font-semibold text-gray-700">Full Name*</label>
+                            <input type="text" required name="full_name" id="full_name"
+                                class="w-full p-2 border rounded-md">
                         </div>
                         <div class="mb-4 ">
                             <label for="father_name" class="block font-semibold text-gray-700">Father Name</label>
@@ -79,8 +80,8 @@
                         <!-- cnic Information -->
                         <div class="mb-4 ">
                             <label for="cnic_number" class="block font-semibold text-gray-700">CNIC
-                                Number</label>
-                            <input type="text" name="cnic_number" id="cnic_number"
+                                Number*</label>
+                            <input type="text" required name="cnic_number" id="cnic_number"
                                 class="w-full p-2 border rounded-md">
                         </div>
                         <div class="mb-4">
@@ -158,6 +159,7 @@
                         <div class="mb-4">
                             <label for="hajj_badal" class="block font-semibold text-gray-700">Hajj Badal</label>
                             <select name="hajj_badal" id="hajj_badal" class="w-full p-2 border rounded-md">
+                                <option value="">select type</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
                             </select>
@@ -200,8 +202,10 @@
                                 Number</label>
                             <input type="tel" name="emergency_number" id="emergency_number"
                                 class="w-full p-2 border rounded-md">
-                        </div>
-                        <div class="mb-4">
+                        </div> <br>
+
+                        <hr class="col-span-2 bg-black p-[1px] ">
+                        <div class="mb-4" class="" id="account_type_dev">
                             <label for="account_type" class="block font-semibold text-gray-700">Account Type*</label>
                             <select name="account_type" id="account_type" class="w-full p-2 border rounded-md">
                                 <option value="">select account type</option>
@@ -210,9 +214,9 @@
                             </select>
                         </div>
 
-                         {{-- group --}}
-                         <div class="mb-4" id="group_div" style="display: none;">
-                            <label for="group" class="block font-semibold text-gray-700">group name</label>
+                        {{-- group --}}
+                        <div class="mb-4 hidden" id="group_dev">
+                            <label for="group" class="block font-semibold text-gray-700">group name*</label>
                             <select name="group" id="group" class="w-full p-2 border rounded-md">
                                 @if ($groups->isEmpty())
                                     <option value="" disabled selected>Add group first</option>
@@ -226,11 +230,14 @@
                         </div>
 
                         {{-- Individual --}}
-                        <div class="mb-4" id="individual_div" style="display: none;">
-                            <label for="total_money" class="block font-semibold text-gray-700">Total Money</label>
-                            <input type="number" name="total_money" id="total_money"
-                                class="w-full p-2 border rounded-md">
+                        <div class="mb-4 hidden" id="total_money_dev">
+                            <label for="total_money" class="block font-semibold text-gray-700">Total Money*</label>
+                            <input type="number" name="total_money" id="total_money" class="w-full p-2 border rounded-md" oninput="convertToUrduWords(this.value)">
                         </div>
+
+                        <div id="urduNumber"></div>
+
+
 
 
                         <!-- Submit Button -->
@@ -244,7 +251,110 @@
             </div>
         </div>
     </div>
+    <script>
+        // Get the select element with the id "account_type"
+        var account_type = document.getElementById("account_type");
+
+        // Add an onchange event listener to the select element
+        account_type.addEventListener("change", function() {
+            // Get the value of the selected option
+            var value = account_type.value;
+
+            // Get the div elements with the ids "group" and "total_money"
+            var group = document.getElementById("group_dev");
+            var total_money = document.getElementById("total_money_dev");
+
+            // Show or hide the div elements based on the value
+            if (value == "Individual") {
+                // Show the div element with the id "total_money"
+                total_money.style.display = "block";
+                // Hide the div element with the id "group"
+                group.style.display = "none";
+                group.value = "";
 
 
+                // Add the required attribute for the element with the id "total_money"
+                total_money.setAttribute("required", "required");
+
+                // Remove the required attribute for the element with the id "group"
+                group.removeAttribute("required");
+
+            } else if (value == "Group") {
+                // Show the div element with the id "group"
+                group.style.display = "block";
+                // Hide the div element with the id "total_money"
+                total_money.style.display = "none";
+                total_money.value = "";
+
+                group.setAttribute("required", "required");
+
+                // Remove the required attribute for the element with the id "total_money"
+                total_money.removeAttribute("required");
+
+            } else {
+                // Hide both div elements
+                group.style.display = "none";
+                total_money.style.display = "none";
+                group.value = "";
+                total_money.value = "";
+                account_type.value = "";
+
+                // Remove the required attribute for both elements
+                group.removeAttribute("required");
+                total_money.removeAttribute("required");
+            }
+        });
+
+        function convertToUrduWords(num) {
+    const urduNumbers = ['', 'ایک', 'دو', 'تین', 'چار', 'پانچ', 'چھ', 'سات', 'آٹھ', 'نو'];
+    const urduTens = ['', ' دس', ' بیس', ' تیس', ' چالیس', ' پچھاس', ' چھببیس', ' ستتھ', ' اٹھتیس', ' انتالیس'];
+    const urduHundreds = ['', ' سو', ' دو سو', ' تین سو', ' چار سو', ' پانچ سو', ' چھ سو', ' سات سو', ' آٹھ سو', ' نو سو'];
+    const urduThousands = ['', ' ہزار', ' لاکھ', ' کروڑ'];
+
+    function convertGroup(num) {
+        let result = '';
+
+        const units = num % 10;
+        const tens = Math.floor((num % 100) / 10);
+        const hundreds = Math.floor(num / 100);
+
+        if (hundreds > 0) {
+            result += urduHundreds[hundreds];
+        }
+
+        if (tens > 0) {
+            result += urduTens[tens];
+        }
+
+        if (units > 0) {
+            result += urduNumbers[units];
+        }
+
+        return result;
+    }
+
+    num = parseInt(num);
+    if (num === 0) {
+        document.getElementById('urduNumber').textContent = 'صفر';
+        return;
+    }
+
+    let urduWords = '';
+    let unitIndex = 0;
+
+    while (num > 0) {
+        const group = num % 1000;
+        if (group !== 0) {
+            urduWords = convertGroup(group) + urduThousands[unitIndex] + ' ' + urduWords;
+        }
+
+        unitIndex++;
+        num = Math.floor(num / 1000);
+    }
+
+    document.getElementById('urduNumber').textContent = urduWords.trim();
+}
+
+    </script>
 
 </x-app-layout>

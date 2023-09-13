@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('haji_cheque_datas', function (Blueprint $table) {
             $table->id();
-            $table->string('accountent_name');
-            $table->unsignedBigInteger('accountent_id')->nullable()->default(0);
-            $table->foreign('accountent_id')->references('id')->on('users');
+            $table->string('created_name');
+            $table->unsignedBigInteger('created_id')->nullable()->default(0);
+            $table->foreign('created_id')->references('id')->on('users');
 
 
             $table->string('joint_account_name')->nullable()->default('NULL');

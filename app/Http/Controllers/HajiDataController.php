@@ -36,6 +36,23 @@ class HajiDataController extends Controller
         $c_id = Auth::user()->id;
         $c_name =  Auth::user()->name;
 
+        // Check if the request has a group parameter
+        if ($request->group) {
+            // Find the group record by id
+            $group = Haji_groups_data::find($request->group);
+
+            if ($group) {
+
+                $group->increment('total_group_member');
+
+                $group->save();
+            } else {
+
+            }
+        }
+
+
+
         if ($request->image) {
 
 
@@ -44,6 +61,7 @@ class HajiDataController extends Controller
             $extension = $request->image->extension();
             $newName =  $request->full_name . '_' . time() . '.' . $extension;
             $request->image->move(public_path('images'), $newName);
+
 
             Haji_Data::create([
                 'created_name' => $c_name,
@@ -66,6 +84,8 @@ class HajiDataController extends Controller
                 'address' => $request->address,
                 'hajj_badal' => $request->hajj_badal,
                 'total_money' => $request->total_money,
+                'group' => $request->group,
+                'account_type' => $request->account_type,
                 'heir_name' => $request->heir_name,
                 'heir_relation' => $request->heir_relation,
                 'heir_number' => $request->heir_number,
@@ -98,14 +118,17 @@ class HajiDataController extends Controller
             'tehsil' => $request->tehsil,
             'address' => $request->address,
             'hajj_badal' => $request->hajj_badal,
+
             'total_money' => $request->total_money,
+            'group' => $request->group,
+            'account_type' => $request->account_type,
             'heir_name' => $request->heir_name,
             'heir_relation' => $request->heir_relation,
             'heir_number' => $request->heir_number,
             'heir_cnic' => $request->heir_cnic,
             'emergency_number' => $request->emergency_number
         ]);
-        return redirect()->route('add_hajji.index')->with('success', 'Hajji Data submitted successfully!');
+        return redirect()->route('HajiData.index')->with('success', 'Hajji Data submitted successfully!');
     }
 
     /**

@@ -41,7 +41,7 @@ class HajiGroupsDataController extends Controller
         ]);
         if ($validator->fails()) {
             return redirect()
-                ->route('hajji_group.index')
+                ->route('HajiGroupsData.index')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -57,7 +57,7 @@ class HajiGroupsDataController extends Controller
         $group->group_cnic = $request->group_cnic;
         $group->total_group_member = $request->total_group_member;
         $group->save();
-        return redirect()->route('hajji_group.index')->with('success', 'Group created successfully.');
+        return redirect()->route('HajiGroupsData.index')->with('success', 'Group created successfully.');
     }
 
     /**

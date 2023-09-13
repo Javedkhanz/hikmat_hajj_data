@@ -14,6 +14,7 @@ class HajiJointAccountDataController extends Controller
     public function index()
     {
         //
+        return view('hajji_data.add_money_to_group');
     }
 
     /**

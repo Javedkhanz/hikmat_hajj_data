@@ -19,17 +19,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('add_hajji', HajiDataController::class);
-Route::resource('hajji_group', HajiGroupsDataController::class);
-Route::resource('defulter', DefaulterDataController::class);
 
+Route::resource('HajiData', HajiDataController::class)->middleware('auth');
+Route::resource('HajiGroupsData', HajiGroupsDataController::class)->middleware('auth');
+Route::resource('DefaulterData', DefaulterDataController::class)->middleware('auth');
+Route::resource('HajiAccountData', HajiAccountDataController::class)->middleware('auth');
+Route::resource('HajiJointAccountData', HajiJointAccountDataController::class)->middleware('auth');
+Route::resource('HajiChequeData', HajiChequeDataController::class)->middleware('auth');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -26,7 +26,7 @@
                 <div class="p-6 text-gray-900">
                     <h2 class="text-2xl font-semibold mb-4 text-center">Add group </h2>
 
-                    <form action="{{ route('HajiGroupsData.index') }}" method="POST"
+                    <form action="{{ route('') }}" method="POST"
                         class="max-w-lg mt-5 mx-auto p-4 bg-white shadow-md">
                         @csrf
 
@@ -40,13 +40,12 @@
                             <input type="text" name="group_cnic" id="group_cnic" value="{{ old('group_cnic') }}"
                                 required class="border border-gray-400 p-2 rounded-md">
                         </div>
-                        {{-- <div class="flex flex-col mb-4">
+                        <div class="flex flex-col mb-4">
                             <label for="total_group_member" class="mb-2 font-bold text-lg text-gray-900">Total Group
                                 Member</label>
                             <input type="number" name="total_group_member" id="total_group_member"
                                 value="{{ old('total_group_member') }}" class="border border-gray-400 p-2 rounded-md">
-                        </div> --}}
-                        <input type="hidden" name="total_group_member" id="total_group_member" value="0">
+                        </div>
                         <div class="flex justify-center">
                             <button type="submit"
                                 class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md">Create
