@@ -34,8 +34,8 @@ class HajiGroupsDataController extends Controller
         //
         $validator = Validator::make($request->all(), [
 
-            'group_name' => 'required|string|unique:Haji_groups_datas',
-            'group_cnic' => 'required|string|unique:Haji_groups_datas',
+            'group_name' => 'required',
+            'group_cnic' => 'required|unique:Haji_groups_datas',
             'total_group_member' => 'nullable|integer',
 
         ]);

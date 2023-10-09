@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_id');
             $table->foreign('created_id')->references('id')->on('users');
 
-            $table->string('group_name')->unique();
+            $table->string('group_name');
             $table->string('group_cnic')->unique();
             $table->integer('total_group_member')->nullable()->default(0);
             $table->timestamps();

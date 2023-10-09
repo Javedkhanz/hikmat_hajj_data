@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('emergency_number')->default('NULL')->nullable(); // Emergency Number
             $table->string('account_type')->default('NULL')->nullable(); // Emergency Number
             $table->string('total_money')->default('NULL')->nullable(); // Total Money
-            $table->string('group')->default('NULL')->nullable();
+            $table->string('group_id')->default('NULL')->nullable();
             $table->timestamps();
         });
     }

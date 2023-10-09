@@ -31,7 +31,7 @@ class Haji_data extends Model
         'hajj_badal',
         'total_money',
         'account_type',
-        'group',
+        'group_id',
         'heir_name',
         'heir_relation',
         'heir_number',

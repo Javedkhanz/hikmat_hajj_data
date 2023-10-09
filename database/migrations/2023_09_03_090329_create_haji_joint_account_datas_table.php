@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('responsible');
 
 
-            $table->decimal('account_balance', 10, 2)->nullable()->default(0);
-            $table->decimal('total_balance_remaining', 10, 2)->nullable()->default(0);
+            $table->decimal('account_balance', 12, 2)->nullable()->default(0);
+            $table->decimal('total_balance_remaining', 12, 2)->nullable()->default(0);
             $table->timestamps();
         });
     }

@@ -22,14 +22,12 @@ return new class extends Migration
             $table->foreign('haji_id')->references('id')->on('haji_datas');
 
 
-            $table->string('money_type');
+            $table->string('money_type')->nullable()->default('NULL');
             $table->string('cheque_number')->nullable()->default('NULL');
-            $table->string('responsible');
+            $table->string('responsible')->nullable()->default('NULL');
 
-
-
-            $table->decimal('account_balance', 10, 2)->nullable()->default(0);
-            $table->decimal('total_balance_remaining', 10, 2)->nullable()->default(0);
+            $table->decimal('account_balance', 12, 2);
+            $table->decimal('total_balance_remaining', 12, 2)->nullable()->default(0);
 
             $table->timestamps();
         });
